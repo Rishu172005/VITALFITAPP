@@ -1,61 +1,99 @@
 // HomeScreen.js
 
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen() {
+  const [userName, setUserName] = useState('Hiro');
+  const [progress, setProgress] = useState(50); // Example: 50% progress
+  const [categories, setCategories] = useState([]);
+  const [recommendedWorkouts, setRecommendedWorkouts] = useState([]);
+
+  // Simulate fetching data
+  useEffect(() => {
+    // Fetch workout categories
+    setCategories([
+      { id: '1', name: 'Yoga' },
+      { id: '2', name: 'Cardio' },
+      { id: '3', name: 'Strength' },
+    ]);
+
+    // Fetch recommended workouts
+    setRecommendedWorkouts([
+      { id: '1', title: 'Morning Yoga Flow', duration: '20 mins' },
+      { id: '2', title: 'HIIT Cardio Blast', duration: '15 mins' },
+      { id: '3', title: 'Full Body Strength', duration: '30 mins' },
+    ]);
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.greeting}>Hi Hiro 👋</Text>
-      <Text style={styles.subtitle}>Let's crush your fitness goals today!</Text>
+    <View style={styles.container}>
+      {/* Welcome Section */}
+      <Text style={styles.welcomeText}>Hi {userName} 👋</Text>
+      <Text style={styles.subText}>Welcome back! Let's crush your fitness goals today.</Text>
 
+      {/* Progress Card */}
       <View style={styles.progressCard}>
-        <Text style={styles.cardTitle}>Today's Progress</Text>
-        <Text style={styles.progressText}>Workout Completed: 30%</Text>
-        <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: '30%' }]} />
-        </View>
+        <Text style={styles.progressText}>Your Progress</Text>
+        <Text style={styles.progressValue}>{progress}% Completed</Text>
       </View>
 
+      {/* Workout Categories */}
       <Text style={styles.sectionTitle}>Workout Categories</Text>
-      <View style={styles.categoryRow}>
-        {['Yoga', 'Cardio', 'Strength'].map((cat) => (
-          <TouchableOpacity key={cat} style={styles.categoryCard}>
-            <Text style={styles.categoryText}>{cat}</Text>
+      <FlatList
+        data={categories}
+        horizontal
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.categoryCard}>
+            <Text style={styles.categoryText}>{item.name}</Text>
           </TouchableOpacity>
-        ))}
-      </View>
+        )}
+        showsHorizontalScrollIndicator={false}
+      />
 
+      {/* Recommended Workouts */}
       <Text style={styles.sectionTitle}>Recommended Workouts</Text>
-      <View style={styles.recommendCard}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/150' }}
-          style={styles.recommendImage}
-        />
-        <View style={{ flex: 1 }}>
-          <Text style={styles.recommendTitle}>Full Body HIIT</Text>
-          <Text style={styles.recommendSub}>20 mins • Beginner</Text>
-        </View>
-      </View>
-    </ScrollView>
+      <FlatList
+        data={recommendedWorkouts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.workoutCard}>
+            <Text style={styles.workoutTitle}>{item.title}</Text>
+            <Text style={styles.workoutDuration}>{item.duration}</Text>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  greeting: { fontSize: 26, fontWeight: 'bold', marginBottom: 4 },
-  subtitle: { fontSize: 16, color: '#666', marginBottom: 20 },
-  progressCard: { backgroundColor: '#f0f0f0', borderRadius: 12, padding: 16, marginBottom: 24 },
-  cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
-  progressText: { fontSize: 14, marginBottom: 6 },
-  progressBar: { height: 10, backgroundColor: '#ccc', borderRadius: 5 },
-  progressFill: { height: '100%', backgroundColor: '#4CAF50', borderRadius: 5 },
-  sectionTitle: { fontSize: 20, fontWeight: '600', marginBottom: 12 },
-  categoryRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
-  categoryCard: { backgroundColor: '#E0F2F1', padding: 20, borderRadius: 10, flex: 1, alignItems: 'center', marginHorizontal: 5 },
-  categoryText: { fontSize: 16, fontWeight: '500' },
-  recommendCard: { flexDirection: 'row', alignItems: 'center', padding: 12, backgroundColor: '#f7f7f7', borderRadius: 10 },
-  recommendImage: { width: 80, height: 80, borderRadius: 10, marginRight: 12 },
-  recommendTitle: { fontSize: 16, fontWeight: '600' },
-  recommendSub: { fontSize: 14, color: '#777' },
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  welcomeText: { fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
+  subText: { fontSize: 16, color: '#666', marginBottom: 16 },
+  progressCard: {
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  progressText: { fontSize: 18, fontWeight: 'bold' },
+  progressValue: { fontSize: 16, color: '#4caf50', marginTop: 8 },
+  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginVertical: 16 },
+  categoryCard: {
+    backgroundColor: '#e0f7fa',
+    padding: 16,
+    borderRadius: 8,
+    marginRight: 8,
+  },
+  categoryText: { fontSize: 16, fontWeight: 'bold', color: '#00796b' },
+  workoutCard: {
+    backgroundColor: '#fce4ec',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  workoutTitle: { fontSize: 16, fontWeight: 'bold' },
+  workoutDuration: { fontSize: 14, color: '#d81b60', marginTop: 4 },
 });
