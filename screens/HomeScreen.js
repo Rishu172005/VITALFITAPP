@@ -1,65 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [userName, setUserName] = useState('Hiro');
-  const [progress, setProgress] = useState(50); // Example: 50% progress
+  const [progress, setProgress] = useState(0);
   const [categories, setCategories] = useState([]);
   const [recommendedWorkouts, setRecommendedWorkouts] = useState([]);
 
-  // Simulate fetching data
   useEffect(() => {
-    // Fetch workout categories
-    setCategories([
-      { id: '1', name: 'Yoga' },
-      { id: '2', name: 'Cardio' },
-      { id: '3', name: 'Strength' },
-    ]);
+    const fetchCategories = async () => {
+      const categoriesSnapshot = await getDocs(collection(db, 'categories'));
+      const categories = categoriesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCategories(categories);
+    };
 
-    // Fetch recommended workouts
-    setRecommendedWorkouts([
-      { id: '1', title: 'Morning Yoga Flow', duration: '20 mins' },
-      { id: '2', title: 'HIIT Cardio Blast', duration: '15 mins' },
-      { id: '3', title: 'Full Body Strength', duration: '30 mins' },
-    ]);
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const workoutsSnapshot = await getDocs(collection(db, 'recommendedWorkouts'));
+        const workoutsData = workoutsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setRecommendedWorkouts(workoutsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* Welcome Section */}
       <Text style={styles.welcomeText}>Hi {userName} 👋</Text>
       <Text style={styles.subText}>Welcome back! Let's crush your fitness goals today.</Text>
 
-      {/* Progress Card */}
       <View style={styles.progressCard}>
         <Text style={styles.progressText}>Your Progress</Text>
         <Text style={styles.progressValue}>{progress}% Completed</Text>
       </View>
 
-      {/* Workout Categories */}
       <Text style={styles.sectionTitle}>Workout Categories</Text>
       <FlatList
         data={categories}
         horizontal
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.categoryCard}>
+          <TouchableOpacity
+            style={styles.categoryCard}
+            onPress={() =>
+              navigation.navigate('WorkoutDetails', {
+                title: item.name,
+                description: item.description || 'No description available.',
+                duration: item.duration || 'N/A',
+              })
+            }
+          >
             <Text style={styles.categoryText}>{item.name}</Text>
           </TouchableOpacity>
         )}
         showsHorizontalScrollIndicator={false}
       />
 
-      {/* Recommended Workouts */}
       <Text style={styles.sectionTitle}>Recommended Workouts</Text>
       <FlatList
         data={recommendedWorkouts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.workoutCard}>
+          <TouchableOpacity
+            style={styles.workoutCard}
+            onPress={() =>
+              navigation.navigate('WorkoutDetails', {
+                title: item.title,
+                description: item.description || 'No description available.',
+                duration: item.duration,
+              })
+            }
+          >
             <Text style={styles.workoutTitle}>{item.title}</Text>
             <Text style={styles.workoutDuration}>{item.duration}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
