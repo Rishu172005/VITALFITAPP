@@ -1,1 +1,1 @@
-# this is my project of sem 6
+# this is our group project of sem 6
