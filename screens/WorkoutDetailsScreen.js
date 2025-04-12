@@ -1,13 +1,21 @@
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-useEffect(() => {
-  const fetchWorkoutDetails = async (workoutId) => {
-    const workoutDoc = await getDoc(doc(db, 'recommendedWorkouts', workoutId));
-    if (workoutDoc.exists()) {
-      console.log('Workout Details:', workoutDoc.data());
-    }
-  };
+export default function WorkoutDetailsScreen({ route }) {
+  const { title = 'No Title', description = 'No Description', duration = 'N/A' } = route.params;
 
-  fetchWorkoutDetails('workout-id'); // Replace 'workout-id' with the actual ID
-}, []);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.duration}>Duration: {duration}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
+  description: { fontSize: 16, color: '#666', marginBottom: 16 },
+  duration: { fontSize: 16, color: '#4caf50', marginBottom: 16 },
+});
