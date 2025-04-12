@@ -6,10 +6,11 @@ import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
   apiKey: 'YOUR_API_KEY',
   authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: 'YOUR_PROJECT_ID',//vitalfit-a7d90
   storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',//62380388690
+  appId: 'YOUR_APP_ID',//1:62380388690:android:17e83406748e00d5a00a8b
+
 };
 
 const app = initializeApp(firebaseConfig);
