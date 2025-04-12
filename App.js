@@ -9,6 +9,18 @@ import WorkoutDetailsScreen from './WorkoutDetailsScreen'; // Import the Workout
 
 const Stack = createNativeStackNavigator();
 
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+import TrackerUploader from './screens/TrackerUploader';
+
+export default function App() {
+  return (
+    <SafeAreaView>
+      <TrackerUploader />
+    </SafeAreaView>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
