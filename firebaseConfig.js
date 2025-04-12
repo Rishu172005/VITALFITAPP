@@ -5,7 +5,7 @@ import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDqYaU1WoRMHnLMz6xpmQ_lbGIGppwzaFc',
-  authDomain: 'YOUR_AUTH_DOMAIN',
+  authDomain: 'VITALFIT.firebaseapp.com',
   projectId: 'YOUR_PROJvitalfit-a7d90ECT_ID',
   storageBucket: 'vitalfit-a7d90.firebasestorage.app',
   messagingSenderId: '62380388690',
