@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "62380388690",
+    "project_id": "vitalfit-a7d90",
+    "storage_bucket": "vitalfit-a7d90.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62380388690:android:17e83406748e00d5a00a8b",
+        "android_client_info": {
+          "package_name": "com.vitalfit.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqYaU1WoRMHnLMz6xpmQ_lbGIGppwzaFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,31 +5,21 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import HomeScreen from './screens/HomeScreen';
-import WorkoutDetailsScreen from './WorkoutDetailsScreen'; // Import the WorkoutDetailsScreen
+import WorkoutDetailsScreen from './WorkoutDetailsScreen';
+import TrackerUploader from './screens/TrackerUploader'; // Now added to stack
 
 const Stack = createNativeStackNavigator();
-
-import React from 'react';
-import { SafeAreaView } from 'react-native';
-import TrackerUploader from './screens/TrackerUploader';
-
-export default function App() {
-  return (
-    <SafeAreaView>
-      <TrackerUploader />
-    </SafeAreaView>
-  );
-}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="WorkoutDetails" component={WorkoutDetailsScreen} /> {/* Add WorkoutDetailsScreen */}
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="WorkoutDetails" component={WorkoutDetailsScreen} />
+        <Stack.Screen name="TrackerUploader" component={TrackerUploader} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  );
 }
