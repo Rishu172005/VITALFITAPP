@@ -9,6 +9,7 @@ import WorkoutDetailsScreen from './WorkoutDetailsScreen';
 import TrackerUploader from './screens/TrackerUploader'; // Now added to stack
 
 const Stack = createNativeStackNavigator();
+<Stack.Screen name="WaterIntake" component={WaterIntakeScreen} />
 
 export default function App() {
   return (
