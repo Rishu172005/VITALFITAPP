@@ -10,7 +10,7 @@ const AppNavigator = () => {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <LoadingScreen />; // Show the splash screen while loading
+    return <LoadingScreen />; // Show a loading screen while determining auth state
   }
 
   return (
