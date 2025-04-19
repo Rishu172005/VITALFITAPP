@@ -23,6 +23,4 @@ export default function App() {
         <Stack.Screen name="TrackerUploader" component={TrackerUploader} />
         <Stack.Screen name="WaterIntake" component={WaterIntakeScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+    </NavigationCo
